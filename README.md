@@ -50,13 +50,6 @@ Contains tests for account management functionalities. It tests various scenario
 
 Contains tests for store functionalities using Mockito for mocking dependencies. It tests scenarios such as successful purchase, out-of-stock products, and payment failures.
 
-## How to Run Tests
-
-1. Clone the repository.
-2. Import the project into your preferred IDE.
-3. Ensure JUnit and Mockito dependencies are included in your project.
-4. Run the tests using your IDE's test runner or use the command line.
-
 ## Conclusion
 
 This project demonstrates the use of unit testing in Java to ensure the correctness of account management and store functionalities. It covers various test scenarios, including successful transactions, out-of-stock products, and payment failures.
