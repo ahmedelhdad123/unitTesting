@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,15 +40,22 @@ public class StoreTest {
 //        assertThrows(RuntimeException.class,()->store.buy(product,customer));
     }
 
-    @Disabled
+//    @Disabled
     @Test void testWithPaymentFailure()
     {
-        Product product = new Product(10, 8);
-        when(accountManager.withdraw(any(),anyInt())).thenReturn("maximum credit exceeded");
+        Product product = new Product(15,10);
+        Customer customer = new Customer(10,false,false);
+        when(accountManager.withdraw(customer,product.getPrice())).thenReturn("insufficient balance");
+        store=new StoreImpl(accountManager);
+        assertAll("ExpectedTest",
+                () -> assertThatThrownBy(() -> store.buy(product, customer)).isInstanceOf(RuntimeException.class)
+                        .hasMessage("Payment failure: insufficient balance"),
+                () -> assertThat(customer.getBalance()).isEqualTo(10)
 
-        assertThatThrownBy(() -> store.buy(product, customer))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Payment failure: maximum credit exceeded");
+        );
+//        assertThatThrownBy(() -> store.buy(product, customer)).isInstanceOf(RuntimeException.class)
+//                .hasMessage("Payment failure: insufficient balance");
+//        assertThat(customer.getBalance()).isEqualTo(10);
     }
 
 }
