@@ -16,7 +16,7 @@ public class StoreTest {
     Product product=new Product();
     Customer customer=new Customer();
     AccountManagerImpl accountManager=Mockito.mock(AccountManagerImpl.class);
-    StoreImpl store=Mockito.mock(StoreImpl.class);
+    StoreImpl store;
 
 
 
@@ -27,7 +27,7 @@ public class StoreTest {
         when(accountManager.withdraw(any(),anyInt())).thenReturn("success");
         store=new StoreImpl(accountManager);
         store.buy(product,customer);
-        assertEquals(7,product.getQuantity());
+        assertThat(product.getQuantity()).isEqualTo(7);
     }
 
     @Test void testWithProductOutOfStock()
